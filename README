@@ -1,3 +1,9 @@
+Revision 2.0
+------------
+switched from GTK+ 2 to GTK+ 3
+
+Revision 1.0
+------------
 shows 8 colored LEDs on screen
 blink frequency and duty cycle can be set for each LED
 

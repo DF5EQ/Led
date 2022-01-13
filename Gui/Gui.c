@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
 
-#include "Gui.gtk"
+#include "Gui.uih"
 #include "GtkLed.h"
 
 /* ===== private datatypes ===== */
@@ -28,37 +28,39 @@ static GtkLed*     Led[8];
 
 /* ===== callback functions ===== */
 
-void on_window_destroy (GtkObject *object, gpointer user_data)
+void on_window_destroy (GtkWidget *object, gpointer user_data)
 {
   gtk_main_quit ();
 }
 
-void button_pressed_cb (GtkButton* button, gpointer user_data)
+gboolean button_press_event_cb (GtkButton* button, GdkEvent* event, gpointer user_data)
 {
-  const gchar* name;
-  gint n;
+    const gchar* name;
+    gint n;
+    
+    name = gtk_buildable_get_name(GTK_BUILDABLE(button));
+    printf("button pressed name: %s\n", name);
 
-  name = gtk_buildable_get_name(GTK_BUILDABLE(button));
-  printf("button pressed name: %s\n", name);
+    n = atoi(strpbrk(name, "0123456789"));
+    printf("button pressed number: %d\n", n);
+    
+    gtk_led_set_mode(Led[n], GTKLED_ON);
 
-  n = atoi(strpbrk(name, "0123456789"));
-  printf("button pressed number: %d\n", n);
-
-  gtk_led_set_mode(Led[n], GTKLED_ON);
+    return FALSE;
 }
 
-void button_released_cb (GtkButton* button, gpointer user_data)
+gboolean button_release_event_cb (GtkButton* button, GdkEvent* event, gpointer user_data)
 {
-  const gchar* name;
-  gint n;
+    const gchar* name;
+    gint n;
 
-  name = gtk_buildable_get_name(GTK_BUILDABLE(button));
-  printf("button released name: %s\n", name);
+    name = gtk_buildable_get_name(GTK_BUILDABLE(button));
+    printf("button released name: %s\n", name);
 
-  n = atoi(strpbrk(name, "0123456789"));
-  printf("button released number: %d\n", n);
+    n = atoi(strpbrk(name, "0123456789"));
+    printf("button released number: %d\n", n);
 
-  gtk_led_set_mode(Led[n], GTKLED_BLINK);
+    gtk_led_set_mode(Led[n], GTKLED_BLINK);
 }
 
 void periode_value_changed_cb (GtkSpinButton* spin, gpointer user_data)
@@ -72,7 +74,6 @@ void periode_value_changed_cb (GtkSpinButton* spin, gpointer user_data)
 
   n = atoi( strpbrk(name, "0123456789") );
   printf("spin periode changed number: %d\n", n );
-
   periode = gtk_spin_button_get_value_as_int(spin);
   gtk_led_set_periode(Led[n], periode);
 }
