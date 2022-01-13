@@ -1,0 +1,17 @@
+shows 8 colored LEDs on screen
+blink frequency and duty cycle can be set for each LED
+
+uses GTK+ 2
+
+controls 8 LEDs attached to parallel port
+
+LED  BIT D-SUB 25
+---  --- --------
+ 0    0     2
+ 1    1     3
+ 2    2     4
+ 3    3     5
+ 4    4     6
+ 5    5     7
+ 6    6     8
+ 7    7     9
