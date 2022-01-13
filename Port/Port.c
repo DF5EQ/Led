@@ -1,27 +1,25 @@
 /* ===== file header ===== */
 
 /* ===== includes ===== */
-#include <linux/ppdev.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <libftdi1/ftdi.h>
 #include "System.h"
 #include "Port.h"
 
 /* ===== private datatypes ===== */
 
 /* ===== private symbols ===== */
-
-/* ===== public constants ====== */
+#define USB_VID 0x0403
+#define USB_PID 0x6001
 
 /* ===== private constants ====== */
 
+/* ===== public constants ====== */
+
 /* ===== private variables ====== */
-static UINT8 u8PortData;
-static int port;
+static UINT8  u8PortData;
+static struct ftdi_context ctx;
 
 /* ===== public variables ====== */
 
@@ -30,24 +28,29 @@ static int port;
 /* ===== public functions ====== */
 void vPortInit(void)
 {
-  u8PortData = 0;
+    u8PortData = 0;
 
-  port = open ("/dev/parport0", O_RDWR);
-  ioctl( port, PPCLAIM, NULL );
-  ioctl( port, PPWDATA, &u8PortData );
+    ftdi_init(&ctx);
 
-  /* Parallelport schliessen
-  ioctl( port, PPRELEASE, NULL );
-  close( port );
-  */
+    /* open FTDI devices based on FTDI VID/PID */
+    if(ftdi_usb_open(&ctx, USB_VID, USB_PID) < 0)
+    {
+        puts("Can't open device");
+        return;
+    }
+
+    /* Enable bitbang mode with a single output line */
+    ftdi_set_bitmode(&ctx, 0xff, BITMODE_BITBANG);
 }
 
 UINT8 u8PortSet(UINT8 u8Mask)
 {
-  u8PortData |= u8Mask;
+    u8PortData |= u8Mask;
 
-  ioctl( port, PPWDATA, &u8PortData );
-  return u8PortData;
+    /* write to output */
+    ftdi_write_data(&ctx, &u8PortData, 1);
+
+    return u8PortData;
 }
 
 UINT8 u8PortGet(void)
@@ -59,15 +62,19 @@ UINT8 u8PortClr(UINT8 u8Mask)
 {
   u8PortData &= ~u8Mask;
 
-  ioctl( port, PPWDATA, &u8PortData );
-  return u8PortData;
+    /* write to output */
+    ftdi_write_data(&ctx, &u8PortData, 1);
+
+    return u8PortData;
 }
 
 UINT8 u8PortTog(UINT8 u8Mask)
 {
   u8PortData ^= u8Mask;
 
-  ioctl( port, PPWDATA, &u8PortData );
-  return u8PortData;
+    /* write to output */
+    ftdi_write_data(&ctx, &u8PortData, 1);
+
+    return u8PortData;
 }
 

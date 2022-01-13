@@ -1,6 +1,18 @@
 Revision 2.0
 ------------
 switched from GTK+ 2 to GTK+ 3
+switched from parallel port to FTDI232R (USB to serial/bitbang)
+
+LED  DBUS  FTDI232R
+---  ----  --------
+ 0     0     30
+ 1     1      2
+ 2     2     32
+ 3     3      8
+ 4     4     31
+ 5     5      6
+ 6     6      7
+ 7     7      3
 
 Revision 1.0
 ------------
