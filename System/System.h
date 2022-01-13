@@ -1,13 +1,11 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-/*  ===== File Header ===== */
-/* not used */
+/* ===== file header ===== */
 
-/* ===== Includes ===== */
-/* not used */
+/* ===== includes ===== */
 
-/* ===== Global Datatypes ===== */
+/* ===== public datatypes ===== */
 
 /* 8 bit types */
 typedef signed char        SINT8;  /*  s8 */
@@ -25,9 +23,7 @@ typedef unsigned int       UINT32; /* u32 */
 typedef signed long long   SINT64; /* s64 */
 typedef unsigned long long UINT64; /* u64 */
 
-/* ===== Global Defines ===== */
-#define SYSTEM_VERSION 0
-
+/* ===== public symbols ===== */
 #ifndef FALSE
   #define FALSE 0
 #endif
@@ -36,13 +32,11 @@ typedef unsigned long long UINT64; /* u64 */
   #define TRUE  1
 #endif
 
-/*   ===== Global Constants ===== */
-extern const UINT16 u16SystemVersion;
+/* ===== public constants ===== */
 
-/*   ===== Global Variables ===== */
-/* not used */
+/* ===== public variables ===== */
 
-/*   ===== Global Functions ===== */
+/* ===== public functions ===== */
 void vSystemInit (void);
 
 #endif /* SYSTEM_H */

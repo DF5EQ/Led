@@ -1,35 +1,24 @@
-/*   ===== File Header ===== */
-/* not used */
+/* ===== file header ===== */
 
-/*   ===== Includes ===== */
+/* ===== includes ===== */
 #include <stdio.h>
 #include "System.h"
 
-/*   ===== Preprocessor Switches ===== */
-/* not used */
+/* ===== provate datatypes ===== */
 
-/*   ===== Local Datatypes ===== */
-/* not used */
+/* ===== private symbols ===== */
 
-/*   ===== Local Symbols ===== */
-/* not used */
+/* ===== private constants ===== */
 
-/*   ===== Local Constants ===== */
-/* not used */
+/* ===== public constants ===== */
 
-/*   ===== Global Constants ===== */
-const UINT16 u16SystemVersion = SYSTEM_VERSION;
+/* ===== private variables ===== */
 
-/*   ===== Local Variables ===== */
-/* not used */
+/* ===== public variables ===== */
 
-/*   ===== Global Variables ===== */
-/* not used */
+/* ===== private functions ===== */
 
-/*   ===== Local Functions ===== */
-/* not used */
-
-/*   ===== Global Functions ===== */
+/*===== public functions ===== */
 void vSystemInit (void)
 {
   /* switch of buffering for stdin */  

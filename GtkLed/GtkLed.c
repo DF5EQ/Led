@@ -1,127 +1,65 @@
-/* EasyCODE V6.8 19.11.2009 23:21:19 */
-/* EasyCODE O
-If=horizontal
-LevelNumbers=no
-LineNumbers=no
-Colors=16777215,0,12582912,12632256,0,0,0,16711680,8388736,0,33023,32768,0,0,0,0,0,32768,12632256,255,65280,255,255,16711935
-ScreenFont=Courier,,100,1,-13,0,700,0,0,0,0,0,0,3,2,1,49,96,96
-PrinterFont=Courier,Normal,100,4,-131,0,400,0,0,0,0,0,0,0,0,0,1,300,300
-LastLevelId=131 */
-/* EasyCODE ( 1
-   GtkLed.c */
-/* EasyCODE ( 117
-   ===== File Header ===== */
+/* ===== file header ===== */
 /*
   implementation of a LED widget for GTK
-  
-  2009-10-23 Peter Baegel (DF5EQ)
-    first issue
+  2009-10-23 Peter Baegel (DF5EQ) first issue
 */
-/* EasyCODE ) */
-/* EasyCODE ( 118
-   ===== Includes ===== */
+
+/* ===== includes ===== */
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
-/* EasyCODE - */
-#include "Gui.gtk"
+
 #include "GtkLed.h"
 #include "Port.h"
-/* EasyCODE ) */
-/* EasyCODE ( 119
-   ===== Preprocessor Switches ===== */
-/* not used */
-/* EasyCODE ) */
-/* EasyCODE ( 120
-   ===== Local Datatypes ===== */
-/* not used */
-/* EasyCODE ) */
-/* EasyCODE ( 121
-   ===== Local Symbols ===== */
+
+/* ===== private datatypes ===== */
+
+/* ===== private symbols ===== */
+
 /* periode of the callback timer in ms */
 #define TIME_CB_PERIODE 10
-/* EasyCODE - */
+
 /* number of defined colors and states */
 #define GTKLED_NUMBER_OF_COLORS 4
 #define GTKLED_NUMBER_OF_STATES 2
-/* EasyCODE ) */
-/* EasyCODE ( 122
-   ===== Local Constants ===== */
-/* the constant picture data are */
-/* declared in a separate file   */
+
+/* ===== private constants ===== */
+
+/* the constant picture data are declared in a separate file */
 #include "led-c-16.h"
-/* EasyCODE - */
-/* EasyCODE < */
-/* set of picture data */
-/* for indexed access  */
-static const GdkPixdata* Pixdata
-  [GTKLED_NUMBER_OF_COLORS]
-  [GTKLED_NUMBER_OF_STATES] =
+
+/* set of picture data for indexed access */
+static const GdkPixdata* Pixdata [GTKLED_NUMBER_OF_COLORS] [GTKLED_NUMBER_OF_STATES] =
 {
   { &led_red_off   , &led_red_on    },
   { &led_green_off , &led_green_on  },
   { &led_blue_off  , &led_blue_on   },
   { &led_yellow_off, &led_yellow_on }
 };
-/* EasyCODE > */
-/* EasyCODE ) */
-/* EasyCODE ( 123
-   ===== Global Constants ===== */
-/* not used */
-/* EasyCODE ) */
-/* EasyCODE ( 124
-   ===== Local Variables ===== */
+
+/* ===== public constants ===== */
+
+/* ===== private variables ===== */
 static GtkLed* FirstLed = NULL;
 static GtkLed* LastLed  = NULL;
-/* EasyCODE ) */
-/* EasyCODE ( 125
-   ===== Global Variables ===== */
-/* not used */
-/* EasyCODE ) */
-/* EasyCODE ( 126
-   ===== Local Functions ===== */
-/* EasyCODE ( 81
-   gtk_led_update_image */
-/* EasyCODE F */
+
+/* ===== public variables ===== */
+
+/* ===== private functions ===== */
 static void gtk_led_update_image (GtkLed* Led)
 {
   if (Led->State == TRUE)
   {
-    gtk_image_set_from_pixbuf
-    (
-      Led->Image,
-      gdk_pixbuf_from_pixdata
-      (
-        Led->PixdataOn,
-        FALSE,
-        NULL
-      )
-    );
-    /* EasyCODE - */
+    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOn, FALSE, NULL ));
     u8PortSet(1<<Led->Number);
   }
   else
   {
-    gtk_image_set_from_pixbuf
-    (
-      Led->Image,
-      gdk_pixbuf_from_pixdata
-      (
-        Led->PixdataOff,
-        FALSE,
-        NULL
-      )
-    );
-    /* EasyCODE - */
+    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOff, FALSE, NULL ));
     u8PortClr(1<<Led->Number);
   }
 }
-/* EasyCODE ) */
-/* EasyCODE ) */
-/* EasyCODE ( 127
-   ===== Callback Functions ===== */
-/* EasyCODE ( 101
-   gtk_led_time_cb */
-/* EasyCODE F */
+
+/* ===== callback functions ===== */
 int gtk_led_time_cb (gpointer data)
 /*
   called periodically from a timer
@@ -135,14 +73,14 @@ int gtk_led_time_cb (gpointer data)
 */
 {
   GtkLed* led;
-  /* EasyCODE - */
+
   /* scan the linked list of LEDs */
   for (led  = FirstLed;
        led != NULL;
        led = led->Next)
   {
     /* count up to 'periode' and then wrap around to 0 */
-    /* EasyCODE - */
+
     led->Counter++;;
     if (led->Counter >= led->Periode)
     {
@@ -164,19 +102,10 @@ int gtk_led_time_cb (gpointer data)
   }
   return TRUE;
 }
-/* EasyCODE ) */
-/* EasyCODE ) */
-/* EasyCODE ( 128
-   ===== Global Functions ===== */
-/* EasyCODE ( 79
-   gtk_led_new */
-/* EasyCODE F */
-GtkLed* gtk_led_new
-(
-  GtkLedColor Color,
-  GtkLedMode  Mode,
-  GtkImage*   Image
-)
+
+/* ===== public functions ===== */
+
+GtkLed* gtk_led_new( GtkLedColor Color, GtkLedMode Mode, GtkImage* Image)
 /*
   returns a pointer to a new LED structure
   the LED is initialised according to the parameters
@@ -191,10 +120,10 @@ GtkLed* gtk_led_new
 */
 {
   GtkLed* Led;
-  /* EasyCODE - */
+
   /* allocate memory for the new structure */
   Led = (GtkLed*)g_malloc (sizeof(GtkLed));
-  /* EasyCODE - */
+
   /* initialise the new structure with values according */
   /* to the parameters and with some default values     */
   Led->Image      = Image;
@@ -207,60 +136,48 @@ GtkLed* gtk_led_new
   Led->State      = Mode ? TRUE : FALSE;
   Led->Counter    = 0;
   Led->Next       = NULL;
-  /* EasyCODE - */
+
   /* for the first LED some special actions must be taken */
   if (FirstLed == NULL)
   {
     /* the first LED gets the number 0 */
     Led->Number = 0;
-    /* EasyCODE - */
+
     /* start of the linked list */
     FirstLed = Led;
-    /* EasyCODE - */
+
     /* install the timer for blinking */
-    gtk_timeout_add
+    g_timeout_add
     (
       TIME_CB_PERIODE,
       gtk_led_time_cb,
       NULL
     );
-    /* EasyCODE - */
+
     vPortInit();
   }
   else
   {
-    /* assign the next number */
-    /* to the new LED         */
+    /* assign the next number to the new LED */
     Led->Number = LastLed->Number + 1;
-    /* EasyCODE - */
-    /* append the new LED */
-    /* to the linked list */
-    
+
+    /* append the new LED to the linked list */
     LastLed->Next = Led;
   }
+
   /* pointer to last LED in the linked list */
   LastLed = Led;
-  /* EasyCODE - */
+
   gtk_led_update_image (Led);
   return Led;
 }
-/* EasyCODE ) */
-/* EasyCODE ( 80
-   gtk_led_destroy */
-/* EasyCODE F */
+
 void gtk_led_destroy (GtkLed* Led)
 {
-  /* to be filled */
+  /* TODO */
 }
-/* EasyCODE ) */
-/* EasyCODE ( 116
-   gtk_led_set_mode */
-/* EasyCODE F */
-void gtk_led_set_mode
-(
-  GtkLed*    Led,
-  GtkLedMode Mode
-)
+
+void gtk_led_set_mode( GtkLed* Led, GtkLedMode Mode)
 /*
   set the mode of a LED
   
@@ -269,7 +186,7 @@ void gtk_led_set_mode
 */
 {
   Led->Mode = Mode;
-  /* EasyCODE - */
+
   /* update the state according to the mode */
   switch (Mode)
   {
@@ -287,15 +204,8 @@ void gtk_led_set_mode
   }
   gtk_led_update_image (Led);
 }
-/* EasyCODE ) */
-/* EasyCODE ( 78
-   gtk_led_set_color */
-/* EasyCODE F */
-void gtk_led_set_color
-(
-  GtkLed*     Led,
-  GtkLedColor Color
-)
+
+void gtk_led_set_color( GtkLed* Led, GtkLedColor Color )
 /*
   change the color of a LED
   
@@ -304,17 +214,10 @@ void gtk_led_set_color
 */
 {
   Led->Color = Color;
-  /* EasyCODE - */
   gtk_led_update_image (Led);
 }
-/* EasyCODE ) */
-/* EasyCODE ( 77
-   gtk_led_get_color */
-/* EasyCODE F */
-GtkLedColor gtk_led_get_color
-(
-  GtkLed* Led
-)
+
+GtkLedColor gtk_led_get_color( GtkLed* Led )
 /*
   read the actual color of a LED
   
@@ -323,15 +226,8 @@ GtkLedColor gtk_led_get_color
 {
   return Led->Color;
 }
-/* EasyCODE ) */
-/* EasyCODE ( 129
-   gtk_led_set_periode */
-/* EasyCODE F */
-void gtk_led_set_periode
-(
-  GtkLed* Led,
-  guint   Periode
-)
+
+void gtk_led_set_periode( GtkLed* Led, guint Periode )
 /*
   change the periode time of a blinking LED
   
@@ -341,14 +237,8 @@ void gtk_led_set_periode
 {
   Led->Periode = Periode/TIME_CB_PERIODE;
 }
-/* EasyCODE ) */
-/* EasyCODE ( 130
-   gtk_led_get_periode */
-/* EasyCODE F */
-guint gtk_led_get_periode
-(
-  GtkLed* Led
-)
+
+guint gtk_led_get_periode( GtkLed* Led )
 /*
   read the actual periode time of a LED
   
@@ -357,15 +247,8 @@ guint gtk_led_get_periode
 {
   return Led->Periode;
 }
-/* EasyCODE ) */
-/* EasyCODE ( 76
-   gtk_led_set_duty */
-/* EasyCODE F */
-void gtk_led_set_duty
-(
-  GtkLed* Led,
-  guint   Duty
-)
+
+void gtk_led_set_duty( GtkLed* Led, guint Duty )
 /*
   change the duty time of a blinking LED
   
@@ -397,14 +280,8 @@ void gtk_led_set_duty
   }
   gtk_led_update_image (Led);
 }
-/* EasyCODE ) */
-/* EasyCODE ( 75
-   gtk_led_get_duty */
-/* EasyCODE F */
-guint gtk_led_get_duty
-(
-  GtkLed* Led
-)
+
+guint gtk_led_get_duty( GtkLed* Led)
 /*
   read the actual duty of a LED
   
@@ -413,6 +290,4 @@ guint gtk_led_get_duty
 {
   return Led->Duty;
 }
-/* EasyCODE ) */
-/* EasyCODE ) */
-/* EasyCODE ) */
+

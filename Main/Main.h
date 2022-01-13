@@ -1,26 +1,21 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/*  ===== File Header ===== */
-/* not used */
+/* ===== file header ===== */
 
-/* ===== Includes ===== */
+/* ===== includes ===== */
 #include "System.h"
 
-/* ===== Global Datatypes ===== */
-/* not used */
+/* ===== public datatypes ===== */
 
-/* ===== Global Defines ===== */
-#define MAIN_VERSION 0
+/* ===== public symbols ===== */
 
-/*   ===== Global Constants ===== */
-extern const UINT16 u16MainVersion;
+/* ===== public constants ===== */
 
-/*   ===== Global Variables ===== */
-/* not used */
+/* ===== public variables ===== */
 
-/*   ===== Global Functions ===== */
+/* ===== public functions ===== */
 int main (int argc, char *argv[]);
 
-#endif
+#endif /* MAIN_H */
 
