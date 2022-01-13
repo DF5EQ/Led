@@ -1,0 +1,10 @@
+#! /bin/bash
+
+for file in *.ico
+do
+  name=led_$(echo $file | sed -e s/-/_/g -e s/.ico//)
+  echo $name
+  gdk-pixbuf-csource --raw --struct --name=$name $file >> led-a-16.h
+done
+
+

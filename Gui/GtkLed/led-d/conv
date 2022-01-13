@@ -1,0 +1,19 @@
+#! /bin/bash
+
+rm -f *-16.h
+for file in *-16.png
+do
+  name=led_$(echo $file | sed -e s/-/_/g -e s/_16.png//)
+  echo $name
+  gdk-pixbuf-csource --raw --struct --name=$name $file >> led-d-16.h
+done
+
+rm -f *-32.h
+for file in *-32.png
+do
+  name=led_$(echo $file | sed -e s/-/_/g -e s/_32.png//)
+  echo $name
+  gdk-pixbuf-csource --raw --struct --name=$name $file >> led-d-32.h
+done
+
+
