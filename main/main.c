@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <gtk/gtk.h>
 
-#include "main.h"
 #include "gui.h"
 #include "port.h"
 
