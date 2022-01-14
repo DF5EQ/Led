@@ -61,61 +61,64 @@ gboolean button_release_event_cb (GtkButton* button, GdkEvent* event, gpointer u
     printf("button released number: %d\n", n);
 
     gtk_led_set_mode(Led[n], GTKLED_BLINK);
+
+    return FALSE;
 }
 
 void periode_value_changed_cb (GtkSpinButton* spin, gpointer user_data)
 {
-  const gchar* name;
-  gint n;
-  gint periode;
+    const gchar* name;
+    gint n;
+    gint periode;
 
-  name = gtk_buildable_get_name(GTK_BUILDABLE(spin));
-  printf( "spin periode changed name: %s\n", name );
+    name = gtk_buildable_get_name(GTK_BUILDABLE(spin));
+    printf( "spin periode changed name: %s\n", name );
 
-  n = atoi( strpbrk(name, "0123456789") );
-  printf("spin periode changed number: %d\n", n );
-  periode = gtk_spin_button_get_value_as_int(spin);
-  gtk_led_set_periode(Led[n], periode);
+    n = atoi( strpbrk(name, "0123456789") );
+    printf("spin periode changed number: %d\n", n );
+
+    periode = gtk_spin_button_get_value_as_int(spin);
+    gtk_led_set_periode(Led[n], periode);
 }
 
 void duty_value_changed_cb (GtkSpinButton* spin, gpointer user_data)
 {
-  const gchar* name;
-  gint n;
-  gint duty;
+    const gchar* name;
+    gint n;
+    gint duty;
 
-  name = gtk_buildable_get_name(GTK_BUILDABLE(spin));
-  printf( "spin duty changed name: %s\n", name );
+    name = gtk_buildable_get_name(GTK_BUILDABLE(spin));
+    printf( "spin duty changed name: %s\n", name );
 
-  n = atoi( strpbrk(name, "0123456789") );
-  printf("spin duty changed number: %d\n", n );
+    n = atoi( strpbrk(name, "0123456789") );
+    printf("spin duty changed number: %d\n", n );
 
-  duty = gtk_spin_button_get_value_as_int(spin);
-  gtk_led_set_duty(Led[n], duty);
+    duty = gtk_spin_button_get_value_as_int(spin);
+    gtk_led_set_duty(Led[n], duty);
 }
 
 /* ===== public functions ===== */
 gboolean gui_init (void)
 {
-  builder = gtk_builder_new ();
-  if (gtk_builder_add_from_string (builder, gui, -1, NULL) == 0)
-  {
-    return FALSE;
-  }
-  window = GTK_WIDGET (gtk_builder_get_object (builder,"MainWindow"));
+    builder = gtk_builder_new ();
+    if (gtk_builder_add_from_string (builder, gui, -1, NULL) == 0)
+    {
+        return FALSE;
+    }
+    window = GTK_WIDGET (gtk_builder_get_object (builder,"MainWindow"));
 
-  Led[0] = gtk_led_new (GTKLED_YELLOW, GTKLED_ON,    GTK_IMAGE (gtk_builder_get_object (builder,"led0")));
-  Led[1] = gtk_led_new (GTKLED_RED,    GTKLED_ON,    GTK_IMAGE (gtk_builder_get_object (builder,"led1")));
-  Led[2] = gtk_led_new (GTKLED_GREEN,  GTKLED_ON,    GTK_IMAGE (gtk_builder_get_object (builder,"led2")));
-  Led[3] = gtk_led_new (GTKLED_BLUE,   GTKLED_BLINK, GTK_IMAGE (gtk_builder_get_object (builder,"led3")));
-  Led[4] = gtk_led_new (GTKLED_YELLOW, GTKLED_BLINK, GTK_IMAGE (gtk_builder_get_object (builder,"led4")));
-  Led[5] = gtk_led_new (GTKLED_RED,    GTKLED_OFF,   GTK_IMAGE (gtk_builder_get_object (builder,"led5")));
-  Led[6] = gtk_led_new (GTKLED_GREEN,  GTKLED_OFF,   GTK_IMAGE (gtk_builder_get_object (builder,"led6")));
-  Led[7] = gtk_led_new (GTKLED_BLUE,   GTKLED_OFF,   GTK_IMAGE (gtk_builder_get_object (builder,"led7")));
+    Led[0] = gtk_led_new (GTKLED_YELLOW, GTKLED_ON,    GTK_IMAGE (gtk_builder_get_object (builder,"led0")));
+    Led[1] = gtk_led_new (GTKLED_RED,    GTKLED_ON,    GTK_IMAGE (gtk_builder_get_object (builder,"led1")));
+    Led[2] = gtk_led_new (GTKLED_GREEN,  GTKLED_ON,    GTK_IMAGE (gtk_builder_get_object (builder,"led2")));
+    Led[3] = gtk_led_new (GTKLED_BLUE,   GTKLED_BLINK, GTK_IMAGE (gtk_builder_get_object (builder,"led3")));
+    Led[4] = gtk_led_new (GTKLED_YELLOW, GTKLED_BLINK, GTK_IMAGE (gtk_builder_get_object (builder,"led4")));
+    Led[5] = gtk_led_new (GTKLED_RED,    GTKLED_OFF,   GTK_IMAGE (gtk_builder_get_object (builder,"led5")));
+    Led[6] = gtk_led_new (GTKLED_GREEN,  GTKLED_OFF,   GTK_IMAGE (gtk_builder_get_object (builder,"led6")));
+    Led[7] = gtk_led_new (GTKLED_BLUE,   GTKLED_OFF,   GTK_IMAGE (gtk_builder_get_object (builder,"led7")));
 
-  gtk_builder_connect_signals (builder, NULL);
+    gtk_builder_connect_signals (builder, NULL);
 
-  gtk_widget_show (window);
-  return TRUE;
+    gtk_widget_show (window);
+    return TRUE;
 }
 

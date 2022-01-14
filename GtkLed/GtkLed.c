@@ -47,14 +47,14 @@ static GtkLed* LastLed  = NULL;
 /* ===== private functions ===== */
 static void gtk_led_update_image (GtkLed* Led)
 {
-  if (Led->State == true)
+  if (Led->State == TRUE)
   {
-    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOn, false, NULL ));
+    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOn, FALSE, NULL ));
     port_set(1<<Led->Number);
   }
   else
   {
-    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOff, false, NULL ));
+    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOff, FALSE, NULL ));
     port_clr(1<<Led->Number);
   }
 }
@@ -100,7 +100,7 @@ int gtk_led_time_cb (gpointer data)
       gtk_led_update_image (led);
     }
   }
-  return true;
+  return TRUE;
 }
 
 /* ===== public functions ===== */
@@ -133,7 +133,7 @@ GtkLed* gtk_led_new( GtkLedColor Color, GtkLedMode Mode, GtkImage* Image)
   Led->PixdataOff = Pixdata[Color][GTKLED_OFF];
   Led->Periode    = 1000/TIME_CB_PERIODE;    /* 1000 ms */
   Led->Duty       = 50;                      /*   50 %  */
-  Led->State      = Mode ? true : false;
+  Led->State      = Mode ? TRUE : FALSE;
   Led->Counter    = 0;
   Led->Next       = NULL;
 
@@ -186,13 +186,13 @@ void gtk_led_set_mode( GtkLed* Led, GtkLedMode Mode)
   switch (Mode)
   {
     case GTKLED_ON:
-      Led->State = true;
+      Led->State = TRUE;
       break;
     case GTKLED_OFF:
-      Led->State = false;
+      Led->State = FALSE;
       break;
     case GTKLED_BLINK:
-      Led->State = true;
+      Led->State = TRUE;
       break;
     default:
       break;
@@ -264,11 +264,11 @@ void gtk_led_set_duty( GtkLed* Led, guint Duty )
   {
     case 0:
       /* switch off LED */
-      Led->State = false;
+      Led->State = FALSE;
       break;
     case 100:
       /* switch on LED */
-      Led->State = true;
+      Led->State = TRUE;
       break;
     default:
       break;

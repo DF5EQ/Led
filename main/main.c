@@ -1,8 +1,9 @@
 /* ===== file header ===== */
 
 /* ===== includes ===== */
+#include <stdbool.h>
 #include <gtk/gtk.h>
-#include "system.h"
+
 #include "main.h"
 #include "gui.h"
 #include "port.h"

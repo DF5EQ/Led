@@ -4,7 +4,6 @@
 /* ===== file header ===== */
 
 /* ===== includes ===== */
-#include "system.h"
 
 /* ===== public datatypes ===== */
 

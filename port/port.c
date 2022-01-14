@@ -2,10 +2,8 @@
 
 /* ===== includes ===== */
 #include <stdio.h>
-#include <unistd.h>
 #include <libftdi1/ftdi.h>
 
-#include "system.h"
 #include "port.h"
 
 /* ===== private datatypes ===== */
@@ -61,7 +59,7 @@ uint8_t port_get(void)
 
 uint8_t port_clr(uint8_t mask)
 {
-  port_data &= ~mask;
+    port_data &= ~mask;
 
     /* write to output */
     ftdi_write_data(&ctx, &port_data, 1);
@@ -71,7 +69,7 @@ uint8_t port_clr(uint8_t mask)
 
 uint8_t port_tog(uint8_t mask)
 {
-  port_data ^= mask;
+    port_data ^= mask;
 
     /* write to output */
     ftdi_write_data(&ctx, &port_data, 1);

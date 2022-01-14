@@ -3,7 +3,7 @@
 /* ===== file header ===== */
 
 /* ===== includes ===== */
-#include "system.h"
+#include <stdint.h>
 
 /* ===== public datatypes ===== */
 
