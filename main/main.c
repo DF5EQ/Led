@@ -3,7 +3,7 @@
 /* ===== includes ===== */
 #include <gtk/gtk.h>
 #include "system.h"
-#include "Main.h"
+#include "main.h"
 #include "Gui.h"
 #include "port.h"
 
