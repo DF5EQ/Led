@@ -2,7 +2,7 @@
 
 /* ===== includes ===== */
 #include <stdio.h>
-#include "System.h"
+#include "system.h"
 
 /* ===== provate datatypes ===== */
 
@@ -19,7 +19,7 @@
 /* ===== private functions ===== */
 
 /*===== public functions ===== */
-void SystemInit (void)
+void system_init (void)
 {
   /* switch of buffering for stdin */  
   setvbuf( stdin, NULL, _IONBF , 0);

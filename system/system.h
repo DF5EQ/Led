@@ -16,7 +16,7 @@
 /* ===== public variables ===== */
 
 /* ===== public functions ===== */
-void SystemInit (void);
+void system_init (void);
 
 #endif /* SYSTEM_H */
 

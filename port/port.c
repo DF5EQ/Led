@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <libftdi1/ftdi.h>
 
-#include "System.h"
+#include "system.h"
 #include "port.h"
 
 /* ===== private datatypes ===== */
