@@ -5,7 +5,7 @@
 #include "System.h"
 #include "Main.h"
 #include "Gui.h"
-#include "Port.h"
+#include "port.h"
 
 /* ===== private datatypes ===== */
 

@@ -14,11 +14,11 @@
 /* ===== public variables ====== */
 
 /* ===== public functions ====== */
-void    PortInit (void);
-uint8_t PortSet  (uint8_t Mask);
-uint8_t PortGet  (void);
-uint8_t PortClr  (uint8_t Mask);
-uint8_t PortTog  (uint8_t Mask);
+void    port_init (void);
+uint8_t port_set  (uint8_t mask);
+uint8_t port_get  (void);
+uint8_t port_clr  (uint8_t mask);
+uint8_t port_tog  (uint8_t mask);
 
 #endif /* PORT_H */
 

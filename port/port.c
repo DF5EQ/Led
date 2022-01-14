@@ -6,7 +6,7 @@
 #include <libftdi1/ftdi.h>
 
 #include "System.h"
-#include "Port.h"
+#include "port.h"
 
 /* ===== private datatypes ===== */
 
@@ -19,7 +19,7 @@
 /* ===== public constants ====== */
 
 /* ===== private variables ====== */
-static uint8_t             PortData;
+static uint8_t             port_data;
 static struct ftdi_context ctx;
 
 /* ===== public variables ====== */
@@ -27,9 +27,9 @@ static struct ftdi_context ctx;
 /* ===== private functions ====== */
 
 /* ===== public functions ====== */
-void PortInit(void)
+void port_init(void)
 {
-    PortData = 0;
+    port_data = 0;
 
     ftdi_init(&ctx);
 
@@ -44,38 +44,38 @@ void PortInit(void)
     ftdi_set_bitmode(&ctx, 0xff, BITMODE_BITBANG);
 }
 
-uint8_t PortSet(uint8_t Mask)
+uint8_t port_set(uint8_t mask)
 {
-    PortData |= Mask;
+    port_data |= mask;
 
     /* write to output */
-    ftdi_write_data(&ctx, &PortData, 1);
+    ftdi_write_data(&ctx, &port_data, 1);
 
-    return PortData;
+    return port_data;
 }
 
-uint8_t PortGet(void)
+uint8_t port_get(void)
 {
-  return PortData;
+  return port_data;
 }
 
-uint8_t PortClr(uint8_t Mask)
+uint8_t port_clr(uint8_t mask)
 {
-  PortData &= ~Mask;
+  port_data &= ~mask;
 
     /* write to output */
-    ftdi_write_data(&ctx, &PortData, 1);
+    ftdi_write_data(&ctx, &port_data, 1);
 
-    return PortData;
+    return port_data;
 }
 
-uint8_t PortTog(uint8_t Mask)
+uint8_t port_tog(uint8_t mask)
 {
-  PortData ^= Mask;
+  port_data ^= mask;
 
     /* write to output */
-    ftdi_write_data(&ctx, &PortData, 1);
+    ftdi_write_data(&ctx, &port_data, 1);
 
-    return PortData;
+    return port_data;
 }
 

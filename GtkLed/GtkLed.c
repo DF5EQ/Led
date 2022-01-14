@@ -9,7 +9,7 @@
 #include <gdk-pixbuf/gdk-pixdata.h>
 
 #include "GtkLed.h"
-#include "Port.h"
+#include "port.h"
 
 /* ===== private datatypes ===== */
 
@@ -50,12 +50,12 @@ static void gtk_led_update_image (GtkLed* Led)
   if (Led->State == true)
   {
     gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOn, false, NULL ));
-    PortSet(1<<Led->Number);
+    port_set(1<<Led->Number);
   }
   else
   {
     gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOff, false, NULL ));
-    PortClr(1<<Led->Number);
+    port_clr(1<<Led->Number);
   }
 }
 
@@ -149,7 +149,7 @@ GtkLed* gtk_led_new( GtkLedColor Color, GtkLedMode Mode, GtkImage* Image)
     /* install the timer for blinking */
     g_timeout_add(TIME_CB_PERIODE, gtk_led_time_cb, NULL);
 
-    PortInit();
+    port_init();
   }
   else
   {
