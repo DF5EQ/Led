@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
 
-#include "Gui.uih"
+#include "gui.uih"
 #include "GtkLed.h"
 
 /* ===== private datatypes ===== */
@@ -95,10 +95,10 @@ void duty_value_changed_cb (GtkSpinButton* spin, gpointer user_data)
 }
 
 /* ===== public functions ===== */
-gboolean GuiInit (void)
+gboolean gui_init (void)
 {
   builder = gtk_builder_new ();
-  if (gtk_builder_add_from_string (builder, Gui, -1, NULL) == 0)
+  if (gtk_builder_add_from_string (builder, gui, -1, NULL) == 0)
   {
     return FALSE;
   }

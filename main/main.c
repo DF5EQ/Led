@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 #include "system.h"
 #include "main.h"
-#include "Gui.h"
+#include "gui.h"
 #include "port.h"
 
 /* ===== private datatypes ===== */
@@ -25,7 +25,7 @@
 int main (int argc, char *argv[])
 {
   gtk_init (&argc, &argv);
-  if (GuiInit() == false)
+  if (gui_init() == false)
   {
     printf("GUI initalisation failed\n");
     return 1;

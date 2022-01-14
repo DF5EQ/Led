@@ -14,7 +14,7 @@
 /* ===== public variables ===== */
 
 /* ===== public Functions ===== */
-gboolean GuiInit (void);
+gboolean gui_init (void);
 
 #endif /* GUI_H */
 
