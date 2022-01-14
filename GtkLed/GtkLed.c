@@ -47,15 +47,15 @@ static GtkLed* LastLed  = NULL;
 /* ===== private functions ===== */
 static void gtk_led_update_image (GtkLed* Led)
 {
-  if (Led->State == TRUE)
+  if (Led->State == true)
   {
-    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOn, FALSE, NULL ));
-    u8PortSet(1<<Led->Number);
+    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOn, false, NULL ));
+    PortSet(1<<Led->Number);
   }
   else
   {
-    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOff, FALSE, NULL ));
-    u8PortClr(1<<Led->Number);
+    gtk_image_set_from_pixbuf( Led->Image, gdk_pixbuf_from_pixdata( Led->PixdataOff, false, NULL ));
+    PortClr(1<<Led->Number);
   }
 }
 
@@ -68,8 +68,8 @@ int gtk_led_time_cb (gpointer data)
   
   data - not used, must be declared for a callback function
   
-  return - TRUE stops further processing of the callback
-           FALSE proceed with default processing of the callback
+  return - true  stops further processing of the callback
+           false proceed with default processing of the callback
 */
 {
   GtkLed* led;
@@ -100,7 +100,7 @@ int gtk_led_time_cb (gpointer data)
       gtk_led_update_image (led);
     }
   }
-  return TRUE;
+  return true;
 }
 
 /* ===== public functions ===== */
@@ -133,7 +133,7 @@ GtkLed* gtk_led_new( GtkLedColor Color, GtkLedMode Mode, GtkImage* Image)
   Led->PixdataOff = Pixdata[Color][GTKLED_OFF];
   Led->Periode    = 1000/TIME_CB_PERIODE;    /* 1000 ms */
   Led->Duty       = 50;                      /*   50 %  */
-  Led->State      = Mode ? TRUE : FALSE;
+  Led->State      = Mode ? true : false;
   Led->Counter    = 0;
   Led->Next       = NULL;
 
@@ -147,14 +147,9 @@ GtkLed* gtk_led_new( GtkLedColor Color, GtkLedMode Mode, GtkImage* Image)
     FirstLed = Led;
 
     /* install the timer for blinking */
-    g_timeout_add
-    (
-      TIME_CB_PERIODE,
-      gtk_led_time_cb,
-      NULL
-    );
+    g_timeout_add(TIME_CB_PERIODE, gtk_led_time_cb, NULL);
 
-    vPortInit();
+    PortInit();
   }
   else
   {
@@ -191,13 +186,13 @@ void gtk_led_set_mode( GtkLed* Led, GtkLedMode Mode)
   switch (Mode)
   {
     case GTKLED_ON:
-      Led->State = TRUE;
+      Led->State = true;
       break;
     case GTKLED_OFF:
-      Led->State = FALSE;
+      Led->State = false;
       break;
     case GTKLED_BLINK:
-      Led->State = TRUE;
+      Led->State = true;
       break;
     default:
       break;
@@ -269,11 +264,11 @@ void gtk_led_set_duty( GtkLed* Led, guint Duty )
   {
     case 0:
       /* switch off LED */
-      Led->State = FALSE;
+      Led->State = false;
       break;
     case 100:
       /* switch on LED */
-      Led->State = TRUE;
+      Led->State = true;
       break;
     default:
       break;

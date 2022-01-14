@@ -19,7 +19,7 @@
 /* ===== private functions ===== */
 
 /*===== public functions ===== */
-void vSystemInit (void)
+void SystemInit (void)
 {
   /* switch of buffering for stdin */  
   setvbuf( stdin, NULL, _IONBF , 0);

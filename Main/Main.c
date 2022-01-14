@@ -25,7 +25,7 @@
 int main (int argc, char *argv[])
 {
   gtk_init (&argc, &argv);
-  if (GuiInit() == FALSE)
+  if (GuiInit() == false)
   {
     printf("GUI initalisation failed\n");
     return 1;
